@@ -1,3 +1,5 @@
+#diagnose for errors before testing. Thanks.
+
 from os import path
 
 HS_FILE = "high_score.txt"
