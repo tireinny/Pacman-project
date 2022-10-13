@@ -127,7 +127,36 @@ class Game:
         if key in self.movement.keys(): print(f'Game has received {self.movement[key]} button')
         # Right now only prints out what key has been pressed but should be modified once
         # we have pacman actually moving around
+        
+ #----------------------------------------------------------------------
+class Fruit(Sprite):
+    
+     def __init__(self, game):
+        super().__init__()
+        self.game = game
+        self.screen = self.game.surface
 
+        self.image = pg.image.load('images/apple.png')
+        self.rect = self.image.get_rect()
+
+        self.rect.left = 259
+        self.rect.top = 363
+        self.x = float(self.rect.x)                                              #<--------- Check before testing
+                                                                                 #-Khoi
+    def width(self): return self.rect.width
+
+    def height(self): return self.rect.height
+
+    def check_edges(self):
+        r = self.rect
+        s_r = self.screen.get_rect()
+        return r.right >= s_r.right or r.left <= 0
+
+    def draw(self): self.screen.blit(self.image, self.rect)
+
+    def update(self):
+        self.draw()
+#--------------------------------------------------------------------------
 
 #The below functions are currently located in start_screen.py and 
 # I am unsure if it should stay there or migrate here or even go
