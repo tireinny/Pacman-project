@@ -158,6 +158,32 @@ class Fruit(Sprite):
         self.draw()
 #--------------------------------------------------------------------------
 
+class Audio:
+    def __init__(self, sounds, playing):
+        self sounds = {}
+        
+        for sound in sounds: 
+            for k, v in sound.item():
+                self.sounds[k] = pg.mixer.Sounds(v)
+                
+        self.playing = playing 
+        
+        
+     def play_sound(self, sound):                                                           #<--------- Check before testing
+        if self.playing and sound in self.sounds.keys():                                    #-Khoi
+            self.sounds[sounds].play()
+            
+     def toggle(self):
+        self.playing = not self.playing
+        pg.mixer.music.play(-1, 0.0) if self.playing else pg.mixer.music.stop()
+               
+      def game_over(self, game):
+        pg.playing = False 
+        pg.mixer.music.stop()
+        self.play_sound(game.GAME_OVER)
+    
+#--------------------------------------------------------------------------
+
 #The below functions are currently located in start_screen.py and 
 # I am unsure if it should stay there or migrate here or even go
 # into another place. Regardless these are here just in case
