@@ -1,4 +1,5 @@
-# Check before testing. 
+# Please check before adding it to the main file. Thank you - Khoi
+
 import pygame
 
 class Dot():
