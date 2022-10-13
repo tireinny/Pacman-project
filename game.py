@@ -5,7 +5,7 @@ import spriteSheets
 import start_screen
 from vector import Vector
 import copy
-from start_screen import Start_screen
+from start_screen import BLACK, Start_screen
 
 
 from os import system
@@ -97,8 +97,18 @@ class Game:
                   
                 elif tiles[i][j] ==1: # Draw Tic-Tak
                     pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
-                elif tiles[i][j] == 2: # Special Tic-Tak
+                elif tiles[i][j] == 2: # Special Tic-Tak PELLETE COLOR
                     pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
+                    tiles[i][j] =5
+                    pg.time.wait(100)  
+                    pg.display.update()
+                elif tiles[i][j] ==5: #special tick tak black color
+                    pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)           
+                    tiles[i][j] =2
+                    pg.time.wait(100)       
+                    pg.display.update() 
+
+
                 # elif tiles[i][j] == 6: #White Special Tic-Tak
                 #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
                 pg.display.update()
