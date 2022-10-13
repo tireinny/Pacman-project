@@ -139,60 +139,9 @@ class Game:
         # we have pacman actually moving around
         
  #----------------------------------------------------------------------
-class Fruit(Sprite):
-    
-     def __init__(self, game):
-        super().__init__()
-        self.game = game
-        self.screen = self.game.surface
 
-        self.image = pg.image.load('images/apple.png')
-        self.rect = self.image.get_rect()
 
-        self.rect.left = 259
-        self.rect.top = 363
-        self.x = float(self.rect.x)                                              #<--------- Check before testing
-                                                                                 #-Khoi
-    def width(self): return self.rect.width
 
-    def height(self): return self.rect.height
-
-    def check_edges(self):
-        r = self.rect
-        s_r = self.screen.get_rect()
-        return r.right >= s_r.right or r.left <= 0
-
-    def draw(self): self.screen.blit(self.image, self.rect)
-
-    def update(self):
-        self.draw()
-#--------------------------------------------------------------------------
-
-class Audio:
-    def __init__(self, sounds, playing):
-        self sounds = {}
-        
-        for sound in sounds: 
-            for k, v in sound.item():
-                self.sounds[k] = pg.mixer.Sounds(v)
-                
-        self.playing = playing 
-        
-        
-     def play_sound(self, sound):                                                           #<--------- Check before testing
-        if self.playing and sound in self.sounds.keys():                                    #-Khoi
-            self.sounds[sounds].play()
-            
-     def toggle(self):
-        self.playing = not self.playing
-        pg.mixer.music.play(-1, 0.0) if self.playing else pg.mixer.music.stop()
-               
-      def game_over(self, game):
-        pg.playing = False 
-        pg.mixer.music.stop()
-        self.play_sound(game.GAME_OVER)
-    
-#--------------------------------------------------------------------------
 
 #The below functions are currently located in start_screen.py and 
 # I am unsure if it should stay there or migrate here or even go
