@@ -1,3 +1,4 @@
+# Check before testing. 
 import pygame
 
 class Dot():
