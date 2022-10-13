@@ -3,17 +3,17 @@ import character
 import ghost
 import spriteSheets
 import start_screen
-import vector
+from vector import Vector
 import copy
 
 from os import system
 
 class Game:
-    # movement = {pg.K_LEFT: vector(-1, 0),   # dictionary to map keys to Vector velocities
-    #             pg.K_RIGHT: vector(1, 0),
-    #             pg.K_UP: vector(0, -1),
-    #             pg.K_DOWN: vector(0, 1)
-    #             }
+    movement = {pg.K_LEFT: Vector(-1, 0),   # dictionary to map keys to Vector velocities
+                pg.K_RIGHT: Vector(1, 0),
+                pg.K_UP: Vector(0, -1),
+                pg.K_DOWN: Vector(0, 1)
+                }
     def __init__(self):
         pg.init() #intialize and set screen size
         self.screen_width = 800
@@ -33,11 +33,12 @@ class Game:
         p = 2   #powerup
         i =3    #emptyspace
         w= 4 # door
-        game_board =[
+        self.game_board =[
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x], 
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
                 [x,p,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,p,x],
-                [x,t,x,x,x,x,t,x,x,x,x,x,t,t,t,t,x,x,x,x,x,t,x,x,x,x,t,x],
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
@@ -49,6 +50,8 @@ class Game:
                 [i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i],
                 [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
                 [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
                 [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
                 [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
@@ -63,35 +66,7 @@ class Game:
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
         
-        tiles = copy.deepcopy(game_board)
-        currentTile = 0
-        pelletColor = (222, 161, 133)
-        square =25
-        for i in range(3, len(tiles) - 2):
-            for j in range(len(tiles[0])):
-                if tiles[i][j] == 7: # Draw wall
-                    imageName = str(currentTile)
-                    if len(imageName) == 1:
-                        imageName = "00" + imageName
-                    elif len(imageName) == 2:
-                            imageName = "0" + imageName
-                    # Get image of desired tile
-                    imageName = "tile" + imageName + ".png"
-                    tileImage = pg.image.load(BoardPath + imageName)
-                    tileImage = pg.transform.scale(tileImage, (square, square))
-
-                    #Display image of tile
-                    self.screen.blit(tileImage, (j * square, i * square, square, square))
-
-                    # pg.draw.rect(screen, (0, 0, 255),(j * square, i * square, square, square)) # (x, y, width, height)
-                elif tiles[i][j] ==1: # Draw Tic-Tak
-                    pg.draw.circle(self.screen, pelletColor,(j * square + square//2, i * square + square//2), square//4)
-                elif tiles[i][j] == 2: #Black Special Tic-Tak
-                    pg.draw.circle(self.screen, (0, 0, 0),(j * square + square//2, i * square + square//2), square//2)
-                # elif tiles[i][j] == 6: #White Special Tic-Tak
-                #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
-
-                currentTile += 1
+      
 
         #self.sound = Sound() 
         #TODO enter a background song to play
@@ -108,6 +83,37 @@ class Game:
         self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
         pg.display.update()
 
+
+        tiles = copy.deepcopy(self.game_board)
+        currentTile = 0
+        pelletColor = (222, 161, 133)
+        square =25
+        print(len(tiles))
+        for i in range(0, len(tiles) ):
+            for j in range(len(tiles[0])):
+                if tiles[i][j] == 0: pass# Draw wall
+                    # imageName = str(currentTile)
+                    # if len(imageName) == 1:
+                    #     imageName = "00" + imageName
+                    # elif len(imageName) == 2:
+                    #         imageName = "0" + imageName
+                    # # Get image of desired tile
+                    # imageName = "tile" + imageName + ".png"
+                    # tileImage = pg.image.load(BoardPath + imageName)
+                    # tileImage = pg.transform.scale(tileImage, (square, square))
+
+                    #Display image of tile
+                    # self.screen.blit(tileImage, (j * square, i * square, square, square))
+
+                    # pg.draw.rect(screen, (0, 0, 255),(j * square, i * square, square, square)) # (x, y, width, height)
+                elif tiles[i][j] ==1: # Draw Tic-Tak
+                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4)
+                elif tiles[i][j] == 2: #Black Special Tic-Tak
+                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2)
+                # elif tiles[i][j] == 6: #White Special Tic-Tak
+                #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
+                pg.display.update()
+                currentTile += 1
 
         while True:
             self.check_events() #checks what keys have been pressed
