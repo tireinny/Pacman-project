@@ -8,19 +8,26 @@ import vector
 from os import system
 
 class Game:
-    movement = {pg.K_LEFT: vector(-1, 0),   # dictionary to map keys to Vector velocities
-                pg.K_RIGHT: vector(1, 0),
-                pg.K_UP: vector(0, -1),
-                pg.K_DOWN: vector(0, 1)
-                }
+    # movement = {pg.K_LEFT: vector(-1, 0),   # dictionary to map keys to Vector velocities
+    #             pg.K_RIGHT: vector(1, 0),
+    #             pg.K_UP: vector(0, -1),
+    #             pg.K_DOWN: vector(0, 1)
+    #             }
     def __init__(self):
         pg.init() #intialize and set screen size
-        self.screen_width = 1000
-        self.screen_height = 700
-        self.screen = pg.display.set_mode((1000,700)) 
+        self.screen_width = 800
+        self.screen_height = 1000
+        self.screen = pg.display.set_mode((self.screen_width,self.screen_height)) 
         # this block of code may need to be removed if pygame is intialized elsewhere
 
         pg.display.set_caption("Pacman")
+        self.background_img = pg.image.load(f'images/game_board.png')
+
+        self.screen.fill((0,0,0))
+        start_coordinate_x = 10 
+        start_coordinate_y = 10
+        
+        
 
         #self.sound = Sound() 
         #TODO enter a background song to play
@@ -34,6 +41,9 @@ class Game:
     def play(self):
         #self.sound.play()
         #TODO uncomment when sound has been made
+        self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
+        pg.display.update()
+
 
         while True:
             self.check_events() #checks what keys have been pressed
@@ -63,12 +73,12 @@ class Game:
 #The below functions are currently located in start_screen.py and 
 # I am unsure if it should stay there or migrate here or even go
 # into another place. Regardless these are here just in case
-#def main(): 
-#    g = Game()
-#    g.play()
+def main(): 
+   g = Game()
+   g.play()
 
-#if __name__ == '__main__':
-#    main()
+if __name__ == '__main__':
+   main()
 
 
 
