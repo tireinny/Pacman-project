@@ -4,6 +4,7 @@ import ghost
 import spriteSheets
 import start_screen
 import vector
+import copy
 
 from os import system
 
@@ -18,7 +19,7 @@ class Game:
         self.screen_width = 800
         self.screen_height = 1000
         self.screen = pg.display.set_mode((self.screen_width,self.screen_height)) 
-        # this block of code may need to be removed if pygame is intialized elsewhere
+        # this block of code may need to be removed if pg is intialized elsewhere
 
         pg.display.set_caption("Pacman")
         self.background_img = pg.image.load(f'images/game_board.png')
@@ -31,36 +32,66 @@ class Game:
         x =0    #wall
         p = 2   #powerup
         i =3    #emptyspace
-        tiles =[x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x, 
-                x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x,
-                x,p,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,p,x,
-                x,t,x,x,x,x,t,x,x,x,x,x,t,t,t,t,x,x,x,x,x,t,x,x,x,x,t,x,
-                x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,
-                x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x,
-                x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x,
-                x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x,
-                x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,i,x,x,x,w,w,w,w,x,x,x,i,x,t,x,x,x,x,x,x,
-                i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i,
-                x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x,
-                x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x,
-                x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x,
-                x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x,
-                x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x,
-                x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x,
-                x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x,
-                x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x,
-                x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x,
-                x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x,
-                x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x,
-                x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,
-                x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]
+        w= 4 # door
+        game_board =[
+                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x], 
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
+                [x,p,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,p,x],
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,t,t,t,x,x,x,x,x,t,x,x,x,x,t,x],
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
+                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
+                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
+                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],
+                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,x,x,x,w,w,w,w,x,x,x,i,x,t,x,x,x,x,x,x],
+                [i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i],
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
+                [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],
+                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
+                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
+                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
+                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
         
-        
+        tiles = copy.deepcopy(game_board)
+        currentTile = 0
+        pelletColor = (222, 161, 133)
+        square =25
+        for i in range(3, len(tiles) - 2):
+            for j in range(len(tiles[0])):
+                if tiles[i][j] == 7: # Draw wall
+                    imageName = str(currentTile)
+                    if len(imageName) == 1:
+                        imageName = "00" + imageName
+                    elif len(imageName) == 2:
+                            imageName = "0" + imageName
+                    # Get image of desired tile
+                    imageName = "tile" + imageName + ".png"
+                    tileImage = pg.image.load(BoardPath + imageName)
+                    tileImage = pg.transform.scale(tileImage, (square, square))
+
+                    #Display image of tile
+                    self.screen.blit(tileImage, (j * square, i * square, square, square))
+
+                    # pg.draw.rect(screen, (0, 0, 255),(j * square, i * square, square, square)) # (x, y, width, height)
+                elif tiles[i][j] ==1: # Draw Tic-Tak
+                    pg.draw.circle(self.screen, pelletColor,(j * square + square//2, i * square + square//2), square//4)
+                elif tiles[i][j] == 2: #Black Special Tic-Tak
+                    pg.draw.circle(self.screen, (0, 0, 0),(j * square + square//2, i * square + square//2), square//2)
+                # elif tiles[i][j] == 6: #White Special Tic-Tak
+                #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
+
+                currentTile += 1
 
         #self.sound = Sound() 
         #TODO enter a background song to play
