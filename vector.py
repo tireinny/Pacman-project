@@ -1,4 +1,5 @@
-#diagnose before testing. Thank.
+# Please check before adding it to the main file. Thank you - Khoi
+
 class Vector:
     
     def __init__(self, x = 0.0, y = 0.0):
