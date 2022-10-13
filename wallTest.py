@@ -1,6 +1,6 @@
 import sys 
 import pygame as pg 
-impo
+from start_screen import Start_screen
 BLUE = (0,0, 255)
 
 def test_wall():
@@ -73,6 +73,7 @@ def test_wall():
         pg.display.update()   
 
 def main():
+    
     test_wall()
 
 

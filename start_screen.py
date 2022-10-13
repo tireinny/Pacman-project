@@ -15,7 +15,7 @@ PASTELORANGE = (255, 184, 82)
 
 
 class Start_screen:
-    def __init__(self):
+    def __init__(self, game):
         pg.init()
         
         self.title_font = pg.font.Font(f'font/Emulogic-zrEw.ttf', 100) #import font file in folder "font for title"
@@ -24,13 +24,15 @@ class Start_screen:
         self.small_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 50) #for play and highscore button
 
 
-        self.screen_width = 1000
-        self.screen_height =700 
+        self.screen_width = 800
+        self.screen_height =1000
         self.backgroundColor = (0, 0, 0) #Black
         self.run = False
 
         self.screen = pg.display.set_mode((self.screen_width, self.screen_height)) 
         pg.display.set_caption(f'Pacman Menu')
+
+        self.game = game
 
     def create_button(self,message, x, y, width, height, hover_color, normal_color, option): # function to create button, x, and y stands for the pixel coordinate, width and height is the dimenstion of the button, hover color is what color
                                                                                      # you want your button to be when it is hovered upon, normal_color is what the button color normally is. 
@@ -43,7 +45,8 @@ class Start_screen:
                 if press[0] ==1:
                     
                     self.run =True #remove this once Game screen is implemented 
-                    #game.play()
+                    self.screen.fill(BLACK)
+                    self.game.play()
                     
             else:
                 pg.draw.rect(self.screen, normal_color, (x, y, width, height))
@@ -166,11 +169,11 @@ class Start_screen:
                     sys.exit()
             pg.display.update()   
 
-def main():
-    s = Start_screen()
-    s.play()
+# def main():
+#     s = Start_screen()
+#     s.play()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
 
     

@@ -5,6 +5,8 @@ import spriteSheets
 import start_screen
 from vector import Vector
 import copy
+from start_screen import Start_screen
+
 
 from os import system
 
@@ -92,24 +94,11 @@ class Game:
         for i in range(0, len(tiles) ):
             for j in range(len(tiles[0])):
                 if tiles[i][j] == 0: pass# Draw wall
-                    # imageName = str(currentTile)
-                    # if len(imageName) == 1:
-                    #     imageName = "00" + imageName
-                    # elif len(imageName) == 2:
-                    #         imageName = "0" + imageName
-                    # # Get image of desired tile
-                    # imageName = "tile" + imageName + ".png"
-                    # tileImage = pg.image.load(BoardPath + imageName)
-                    # tileImage = pg.transform.scale(tileImage, (square, square))
-
-                    #Display image of tile
-                    # self.screen.blit(tileImage, (j * square, i * square, square, square))
-
-                    # pg.draw.rect(screen, (0, 0, 255),(j * square, i * square, square, square)) # (x, y, width, height)
+                  
                 elif tiles[i][j] ==1: # Draw Tic-Tak
-                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4)
-                elif tiles[i][j] == 2: #Black Special Tic-Tak
-                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2)
+                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
+                elif tiles[i][j] == 2: # Special Tic-Tak
+                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
                 # elif tiles[i][j] == 6: #White Special Tic-Tak
                 #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
                 pg.display.update()
@@ -144,8 +133,9 @@ class Game:
 # I am unsure if it should stay there or migrate here or even go
 # into another place. Regardless these are here just in case
 def main(): 
-   g = Game()
-   g.play()
+   game = Game()
+   start_screen = Start_screen(game)
+   start_screen.play()
 
 if __name__ == '__main__':
    main()
