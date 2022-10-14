@@ -2,6 +2,7 @@ import pygame as pg
 import sys
 import spriteSheets as ss
 from ghost import Ghost
+from high_score import High_score
 
 WHITE =(255, 255, 255)
 GRAY = (150, 150, 150)
