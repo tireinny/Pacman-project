@@ -1,4 +1,4 @@
 import pygame as pg
 
 
-class Pacman:
+class Pacman:pass

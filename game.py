@@ -1,12 +1,13 @@
 import pygame as pg
 import character
 import ghost
+from scoreboard import Scoreboard
 import spriteSheets
-import start_screen
+
 from vector import Vector
 import copy
 from start_screen import BLACK, Start_screen
-
+from settings import Settings
 
 from os import system
 
@@ -22,14 +23,14 @@ class Game:
         self.screen_height = 1000
         self.screen = pg.display.set_mode((self.screen_width,self.screen_height)) 
         # this block of code may need to be removed if pg is intialized elsewhere
-
+        self.settings = Settings()
         pg.display.set_caption("Pacman")
         self.background_img = pg.image.load(f'images/game_board.png')
-
+        self.scoreboard = Scoreboard(game =self)
         self.screen.fill((0,0,0))
         start_coordinate_x = 10 
         start_coordinate_y = 10
-
+        
         t = 1 #dot
         x =0    #wall
         p = 2   #powerup

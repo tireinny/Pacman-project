@@ -5,7 +5,7 @@ import os
 
 HS_FILE = "high_score.txt"
 LIGHTERGRAY = (200, 200, 200)
-class High_score:
+class Scoreboard:
     def __init__(self, game): 
         self.score = 0
         self.level = 0

@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 import spriteSheets as ss
 from ghost import Ghost
-from high_score import High_score
+from scoreboard import Scoreboard
 
 WHITE =(255, 255, 255)
 GRAY = (150, 150, 150)
@@ -19,11 +19,10 @@ class Start_screen:
     def __init__(self, game):
         pg.init()
         
-        self.title_font = pg.font.Font(f'font/Emulogic-zrEw.ttf', 100) #import font file in folder "font for title"
+        self.start_font = pg.font.Font(f'font/Emulogic-zrEw.ttf', 100) #import font file in folder "font for title"
         self.blink_ghost_names =0
         self.smaller_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 30)
         self.small_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 50) #for play and highscore button
-
 
         self.screen_width = 800
         self.screen_height =1000
@@ -34,6 +33,12 @@ class Start_screen:
         pg.display.set_caption(f'Pacman Menu')
 
         self.game = game
+        self.highscore = self.game.scoreboard.high_score
+
+        self.start_text = self.start_font.render("Pac man", True, (255,255,255)) #get fonts ready
+        self.play_text = self.small_font.render("Play Game", True, GRAY)
+        self.highscore_text = self.small_font.render("High Scores", True, GRAY)
+        self.highscore_number = self.small_font.render(str(self.highscore), True, GRAY)
 
     def create_button(self,message, x, y, width, height, hover_color, normal_color, option): # function to create button, x, and y stands for the pixel coordinate, width and height is the dimenstion of the button, hover color is what color
                                                                                      # you want your button to be when it is hovered upon, normal_color is what the button color normally is. 
@@ -56,7 +61,8 @@ class Start_screen:
                 pg.draw.rect(self.screen, hover_color, (x,y, width, height)) #turn the box into  the hover color
                 if press[0] ==1:
                     
-                    self.run =True #remove this once highscore screen is implemented 
+                    # self.run =True #remove this once highscore screen is implemented 
+                    self.diplay_highscore_screen()
                     #highscore.play()
                     #self.title_music.stop()
             else:
@@ -65,18 +71,23 @@ class Start_screen:
         play_button_text = self.small_font.render(message, True, GRAY)
         self.screen.blit(play_button_text, (int(x), int(y)))
 
+    def diplay_highscore_screen(self):
+        self.game.scoreboard.open_high_score_file()
+        self.screen.fill(BLACK)
+        self.screen.blit(self.highscore_text, ((self.screen_width - self.highscore_text.get_width())/2, 100))
+        self.screen.blit(self.highscore_number, ((self.screen_width - self.highscore_number.get_width())/2, 160))
+        
+
     def play(self):
 
-        start_text = self.title_font.render("Pac man", True, (255,255,255)) #get fonts ready
-        play_text = self.small_font.render("Play Game", True, GRAY)
-        highscore_text = self.small_font.render("High Scores", True, GRAY)
+        
 
         self.screen.fill(self.backgroundColor)
 
         ghost = Ghost(self.screen)#create ghhost object to create other ghosts
         list_of_ghost =[ghost.red_ghost, ghost.pink_ghost, ghost.blue_ghost, ghost.yellow_ghost]#store ghosts in a list to print 
         
-        self.screen.blit(start_text, [(self.screen_width - start_text.get_width())/2, 0])
+        self.screen.blit(self.start_text, [(self.screen_width - self.start_text.get_width())/2, 0])
 
         names_of_ghosts = '-SHADOW\n "BLINKY"\n -SPEEDY\n "PINKY"\n -BASHFUL \n"INKYl"\n -POKEY \n"CLYDE"'.splitlines()
         txt_cnt = 0 #used for seuquentially blinking the names of the ghost on the screen
@@ -93,8 +104,8 @@ class Start_screen:
 
         list_of_posY = (200, 200, 280, 280, 360, 360, 440, 440) #used for positioning each name of the ghosts on the y axis
         pos_indexY =0
-        self.create_button("PLAY", (self.screen_width -play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
-        self.create_button("HighScores", (self.screen_width -highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)        
+        self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+        self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)        
         while not self.run:
 
             for n in list_of_ghost: # loop used for drawing ghosts on screen before their name is introduced
@@ -122,8 +133,8 @@ class Start_screen:
                     if pos_indexX > 1: pos_indexX=0 #reset pos x after the nickname is shown
                     if pos_indexY > 7: pos_indexY =0#reset pos y after the nickname is shown
                     txt_cnt +=1
-            self.create_button("PLAY", (self.screen_width -play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
-            self.create_button("HighScores", (self.screen_width -highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
+            self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+            self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
                           
 
 
