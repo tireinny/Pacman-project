@@ -1,6 +1,6 @@
 import pygame
 # Demo Only 
-
+# From a different resource file
 # -------------------------------------------------------------------------------------
 class Enemy:
     SPEED = 6
