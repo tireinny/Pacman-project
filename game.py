@@ -3,11 +3,15 @@ import character
 import ghost
 from scoreboard import Scoreboard
 import spriteSheets
+from node import Node
+
 
 from vector import Vector
 import copy
 from start_screen import BLACK, Start_screen
 from settings import Settings
+
+
 
 from os import system
 
@@ -36,6 +40,8 @@ class Game:
         p = 2   #powerup
         i =3    #emptyspace
         w= 4 # door
+        g = 6 #ghost
+        p =7 # pacman
         self.game_board =[
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x], 
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
@@ -45,7 +51,7 @@ class Game:
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
-                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],
+                [x,t,t,t,g,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,g,t,t,t,x],
                 [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
                 [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
                 [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
@@ -63,9 +69,9 @@ class Game:
                 [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
-                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],
+                [x,t,t,g,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,g,t,x],
                 [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],
-                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,p,x,x,x,x,x,x,x,x,x,x,t,x],
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
         
@@ -92,32 +98,59 @@ class Game:
         pelletColor = (222, 161, 133)
         square =25
         print(len(tiles))
+        ghosts = ghost.Ghost_manager(self.screen)
+        index = 1
+        list_of_nodes = []
+        
+
         for i in range(0, len(tiles) ):
             for j in range(len(tiles[0])):
-                if tiles[i][j] == 0: pass# Draw wall
+                if tiles[i][j] == 0:
+                    list_of_nodes.append(Node(row = j , col = i , contains = tiles[i][j]))
                   
                 elif tiles[i][j] ==1: # Draw Tic-Tak
                     pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
+                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+               
                 elif tiles[i][j] == 2: # Special Tic-Tak PELLETE COLOR
                     pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
+                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+                    
                     tiles[i][j] =5
                     pg.time.wait(100)  
                     pg.display.update()
+
                 elif tiles[i][j] ==5: #special tick tak black color
-                    pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)           
+                    pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)    
+                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))       
+                    
                     tiles[i][j] =2
                     pg.time.wait(100)       
                     pg.display.update() 
 
+                elif tiles[i][j] ==6:
+                    ghosts.set_coordinate(j * square + square//.44, i * square + square//2, index)
+                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+                    index +=1
+
+
+    
+
+
+
+        
 
                 # elif tiles[i][j] == 6: #White Special Tic-Tak
                 #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
                 pg.display.update()
                 currentTile += 1
+        
+
 
         while True:
             self.check_events() #checks what keys have been pressed
-            
+            ghosts.update()
+
             #self.character.update()
             #self.ghosts.update()
             #TODO uncomment when classes are implemented

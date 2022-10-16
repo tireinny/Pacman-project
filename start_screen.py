@@ -1,8 +1,9 @@
 import pygame as pg
 import sys
 import spriteSheets as ss
-from ghost import Ghost
+from ghost import Ghost_manager
 from scoreboard import Scoreboard
+ 
 
 WHITE =(255, 255, 255)
 GRAY = (150, 150, 150)
@@ -84,8 +85,8 @@ class Start_screen:
 
         self.screen.fill(self.backgroundColor)
 
-        ghost = Ghost(self.screen)#create ghhost object to create other ghosts
-        list_of_ghost =[ghost.red_ghost, ghost.pink_ghost, ghost.blue_ghost, ghost.yellow_ghost]#store ghosts in a list to print 
+        ghosts = Ghost_manager(self.screen)#create ghhost object to create other ghosts
+        list_of_ghost =[ghosts.red_ghost, ghosts.pink_ghost, ghosts.blue_ghost, ghosts.yellow_ghost]#store ghosts in a list to print 
         
         self.screen.blit(self.start_text, [(self.screen_width - self.start_text.get_width())/2, 0])
 
@@ -115,7 +116,7 @@ class Start_screen:
                 for g in range(2):
                     if g == 0:
                         
-                        n.draw(list_of_posX[pos_indexX], list_of_posY[pos_indexY])
+                        n.draw(pos_x = list_of_posX[pos_indexX], pos_y= list_of_posY[pos_indexY])
                         n.update()
                             
                         pg.display.update()
