@@ -7,8 +7,8 @@ class Settings():
     def __init__(self):
         """Initialize the game's settings."""
         # Screen settings
-        self.screen_width = 224
-        self.screen_height = 288
+        self.screen_width = 400
+        self.screen_height = 600
 
         # changes I made 
         # shoot portal every 4 minutes 
