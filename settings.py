@@ -18,7 +18,8 @@ class Settings():
         self.pacman_shoot_every = 240    # about every 240 seconds (4 minutes) at 60 fps 
         self.ghost_points = 200 
         self.node_points = 10 
-        self.fruit_points = 100
+        self.cherry = 100
+        self.strawberry = 200
         self.fruits = random.randint(self.screen_width, self.screen_height)           # spawn random locations
         
     def initialize_speed_settings(self):
