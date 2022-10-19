@@ -1,6 +1,7 @@
 # Portal 
 # Demo file 
-# Need to test before implement into main --- Khoi 
+# Need to test and make changes before implement into main --- Khoi 
+# 
 
 # -------------------------------------------------------------------------------------
 class Portal:
