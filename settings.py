@@ -4,8 +4,8 @@ Also added node point value, as each dot is worth 10 in the original,
 and modified screen width and height variables to be same as game.py -Charlie'''
 
 import random
+
 class Settings():
-    """A class to store all settings for Alien Invasion."""
 
     def __init__(self):
         """Initialize the game's settings."""
