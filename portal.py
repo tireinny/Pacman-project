@@ -1,14 +1,17 @@
 # Portal 
 # Demo file 
 # Need to test and make changes before implement into main --- Khoi 
-# 
+# imported some libraries - Charlie
 
 # -------------------------------------------------------------------------------------
+import pygame as pg
+from vector import Vector
+
 class Portal:
     SPEED = 30
 
     def __init__(self, rect, velocity=Vector()):
-        self.portalAnimation = ['animation file goes here'] <<<--------------------- change this 
+        self.portalAnimation = ['animation file goes here'] #<<<--------------------- change this 
         self.currentFrame, self.active = 0, 0
         self.startF, self.endF = 0, 1  # len(self.enemyAnimation) - 1
         self.rect = rect
