@@ -43,39 +43,89 @@ class Game:
         g = 6 #ghost
         p =7 # pacman
         self.game_board =[
-                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x], 
-                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
-                [x,p,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,p,x],
-                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
-                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
-                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
-                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
-                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],
-                [x,t,t,t,g,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,g,t,t,t,x],
-                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,x,x,x,w,w,w,w,x,x,x,i,x,t,x,x,x,x,x,x],
-                [i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i],
-                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
-                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],
-                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],
-                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
-                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],
-                [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],
-                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
-                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],
-                [x,t,t,g,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,g,t,x],
-                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],
-                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,p,x,x,x,x,x,x,x,x,x,x,t,x],
-                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],
-                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
+            
+                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x],#0
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],#1
+                [x,p,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,p,x],#2
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#3
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#4
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],#5
+                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],#6
+                [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],#7
+                [x,t,t,t,g,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,g,t,t,t,x],#8
+                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],#9
+                [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],#10
+                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],#11
+                [x,x,x,x,x,x,t,x,i,x,x,x,w,w,w,w,x,x,x,i,x,t,x,x,x,x,x,x],#12
+                [i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i],#13
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#14
+                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],#15
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#16
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#17
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#18
+                [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#19
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],#20
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#21
+                [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#22
+                [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],#23
+                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#24
+                [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#25
+                [x,t,t,g,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,g,t,x],#26
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],#27
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,p,x,x,x,x,x,x,x,x,x,x,t,x],#28
+                [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],#39
+                [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]#30
+        #width of matrix is 28
+        adjacency_list = {}
+        offset = 0
+        current_row = 0
+        current_pos = 0
+        print(adjacency_list)
+        for row in self.game_board:
+            for index in row:
+                if index  != (x and w) and current_pos < 28: #if space is a dot 
+                    
+                    print("found a space for index " + str(offset))
+                    
+                    if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
+                    
+                    if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([current_row, current_pos-1])
+
+                    if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([(current_row+1,current_pos)])
+                    
+                    if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([(current_row-1, current_pos)])
+                    current_pos +=1
+                    offset+=1
+                    
+                elif index == x and current_pos < 28:
+                    print("found wall")
+                    adjacency_list.setdefault(offset,[]).append( [None, None])
+                    current_pos +=1
+                    offset+=1
+                    
+                elif index == w and current_pos < 28: 
+                    print("found door")
+                    adjacency_list.setdefault(offset,[]).append( [None, None])
+
+                    if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([(current_row+1,current_pos)])
+                    
+                    if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
+                        adjacency_list.setdefault(offset,[]).append([(current_row-1, current_pos)])                
+                        current_pos +=1
+                        offset+=1
+                        
+            current_pos =0
+            current_row +=1    
+            # offset+=27            
         
-      
+        print(adjacency_list)
+
+
 
         #self.sound = Sound() 
         #TODO enter a background song to play
