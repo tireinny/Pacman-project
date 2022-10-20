@@ -52,10 +52,10 @@ class Game:
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],#5
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],#6
                 [x,t,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,t,x],#7
-                [x,t,t,t,g,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,g,t,t,t,x],#8
+                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],#8
                 [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],#9
                 [x,x,x,x,x,x,t,x,x,x,x,x,i,x,x,i,x,x,x,x,x,t,x,x,x,x,x,x],#10
-                [x,x,x,x,x,x,t,x,i,i,i,i,i,i,i,i,i,i,i,i,x,t,x,x,x,x,x,x],#11
+                [x,x,x,x,x,x,t,x,i,i,i,i,g,g,g,g,i,i,i,i,x,t,x,x,x,x,x,x],#11
                 [x,x,x,x,x,x,t,x,i,x,x,x,w,w,w,w,x,x,x,i,x,t,x,x,x,x,x,x],#12
                 [i,i,i,i,i,i,t,i,i,x,i,i,i,i,i,i,i,i,x,i,i,t,i,i,i,i,i,i],#13
                 [x,x,x,x,x,x,t,x,i,x,x,x,x,x,x,x,x,x,x,i,x,t,x,x,x,x,x,x],#14
@@ -70,60 +70,15 @@ class Game:
                 [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],#23
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#24
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#25
-                [x,t,t,g,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,g,t,x],#26
+                [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],#26
                 [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],#27
                 [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,p,x,x,x,x,x,x,x,x,x,x,t,x],#28
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],#39
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]#30
         #width of matrix is 28
-        adjacency_list = {}
-        offset = 0
-        current_row = 0
-        current_pos = 0
-        print(adjacency_list)
-        for row in self.game_board:
-            for index in row:
-                if index  != (x and w) and current_pos < 28: #if space is a dot 
-                    
-                    print("found a space for index " + str(offset))
-                    
-                    if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
-                    
-                    if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos-1])
-
-                    if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
-                    
-                    if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])
-                    current_pos +=1
-                    offset+=1
-                    
-                elif index == x and current_pos < 28:
-                    print("found wall")
-                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
-                    current_pos +=1
-                    offset+=1
-                    
-                elif index == w and current_pos < 28: 
-                    print("found door")
-                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
-
-                    if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
-                    
-                    if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])                
-                        current_pos +=1
-                        offset+=1
-                        
-            current_pos =0
-            current_row +=1    
-            # offset+=27            
         
-        print(adjacency_list)
+        
+        # print(adjacency_list)
 
 
 
@@ -144,7 +99,6 @@ class Game:
 
 
         tiles = copy.deepcopy(self.game_board)
-        currentTile = 0
         pelletColor = (222, 161, 133)
         square =25
         print(len(tiles))
@@ -153,38 +107,104 @@ class Game:
         list_of_nodes = []
         
 
-        for i in range(0, len(tiles) ):
-            for j in range(len(tiles[0])):
-                if tiles[i][j] == 0:
-                    list_of_nodes.append(Node(row = j , col = i , contains = tiles[i][j]))
+        # for i in range(0, len(tiles) ):
+        #     for j in range(len(tiles[0])):
+        #         if tiles[i][j] == 0:
+        #             list_of_nodes.append(Node(row = j , col = i , contains = tiles[i][j]))
                   
-                elif tiles[i][j] ==1: # Draw Tic-Tak
-                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
-                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+        #         elif tiles[i][j] ==1: # Draw Tic-Tak
+        #             pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
+        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
                
-                elif tiles[i][j] == 2: # Special Tic-Tak PELLETE COLOR
-                    pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
-                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+        #         elif tiles[i][j] == 2: # Special Tic-Tak PELLETE COLOR
+        #             pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
+        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
                     
-                    tiles[i][j] =5
-                    pg.time.wait(100)  
-                    pg.display.update()
+        #             tiles[i][j] =5
+        #             pg.time.wait(100)  
+        #             pg.display.update()
 
-                elif tiles[i][j] ==5: #special tick tak black color
-                    pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)    
-                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))       
+        #         elif tiles[i][j] ==5: #special tick tak black color
+        #             pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)    
+        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))       
                     
-                    tiles[i][j] =2
-                    pg.time.wait(100)       
-                    pg.display.update() 
+        #             tiles[i][j] =2
+        #             pg.time.wait(100)       
+        #             pg.display.update() 
 
-                elif tiles[i][j] ==6:
-                    ghosts.set_coordinate(j * square + square//.44, i * square + square//2, index)
-                    list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
-                    index +=1
+        #         elif tiles[i][j] ==6:
+        #             ghosts.set_coordinate(j * square + square//.44, i * square + square//2, index)
+        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
+        #             index +=1
 
 
-    
+        adjacency_list = {}
+        offset = 0
+        current_row = 0
+        current_pos = 0
+        print(adjacency_list)
+        t = 1 #dot
+        x =0    #wall
+        p = 2   #powerup
+        i =3    #emptyspace
+        w= 4 # door
+        g = 6 #ghost
+        p =7 # pacman
+        ghost_color_code =1
+        for row in tiles:
+            for index in row:
+                if index  != (x and w) and current_pos < 28: #if space is a dot 
+                    
+                    print("found a space for index " + str(offset))
+                    if index ==1: # Draw Tic-Tak
+                        pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//4.5)
+                    
+                    if index == 2: # Special Tic-Tak PELLETE COLOR
+                        pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)
+                    
+                    if index ==5: #special tick tak black color
+                        pg.draw.circle(self.screen, BLACK,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)    
+                    
+                    if index ==6:  
+                        ghosts.set_coordinate(current_pos * square + square//.44, current_row * square + square//2, ghost_color_code)
+                        ghost_color_code+=1
+                                                            
+                    if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
+                    
+                    if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos-1])
+
+                    if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
+                    
+                    if (current_row-1 >= 0) and (tiles[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])
+                    current_pos +=1
+                    offset+=1
+                    
+                elif index == x and current_pos < 28:
+                    print("found wall")
+                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
+                    current_pos +=1
+                    offset+=1
+                    
+                elif index == w and current_pos < 28: 
+                    print("found door")
+                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
+
+                    if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
+                    
+                    if (current_row-1 >= 0) and (tiles[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])                
+                        current_pos +=1
+                        offset+=1
+                
+
+            current_pos =0
+            current_row +=1    
+            # offset+=27                
 
 
 
@@ -192,8 +212,8 @@ class Game:
 
                 # elif tiles[i][j] == 6: #White Special Tic-Tak
                 #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
-                pg.display.update()
-                currentTile += 1
+            pg.display.update()
+
         
 
 
