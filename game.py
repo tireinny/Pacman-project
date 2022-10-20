@@ -88,34 +88,34 @@ class Game:
                     print("found a space for index " + str(offset))
                     
                     if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
                     
                     if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([current_row, current_pos-1])
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos-1])
 
                     if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([(current_row+1,current_pos)])
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
                     
                     if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([(current_row-1, current_pos)])
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])
                     current_pos +=1
                     offset+=1
                     
                 elif index == x and current_pos < 28:
                     print("found wall")
-                    adjacency_list.setdefault(offset,[]).append( [None, None])
+                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
                     current_pos +=1
                     offset+=1
                     
                 elif index == w and current_pos < 28: 
                     print("found door")
-                    adjacency_list.setdefault(offset,[]).append( [None, None])
+                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
 
                     if (current_row+1 < len(self.game_board)) and (self.game_board[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([(current_row+1,current_pos)])
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
                     
                     if (current_row-1 >= 0) and (self.game_board[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
-                        adjacency_list.setdefault(offset,[]).append([(current_row-1, current_pos)])                
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])                
                         current_pos +=1
                         offset+=1
                         
