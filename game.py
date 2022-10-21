@@ -26,6 +26,7 @@ class Game:
         self.screen_width = 800
         self.screen_height = 1000
         self.screen = pg.display.set_mode((self.screen_width,self.screen_height)) 
+        self.settings = Settings()
         # this block of code may need to be removed if pg is intialized elsewhere
         self.settings = Settings()
         pg.display.set_caption("Pacman")
@@ -41,7 +42,7 @@ class Game:
         i =3    #emptyspace
         w= 4 # door
         g = 6 #ghost
-        p =7 # pacman
+        m =7 # pacman
         self.game_board =[
             
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x],#0
@@ -67,12 +68,12 @@ class Game:
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,x],#20
                 [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#21
                 [x,t,x,x,x,x,t,x,x,x,x,x,t,x,x,t,x,x,x,x,x,t,x,x,x,x,t,x],#22
-                [x,p,t,t,x,x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x,x,t,t,p,x],#23
+                [x,p,t,t,x,x,t,t,t,t,t,t,t,t,p,t,t,t,t,t,t,t,x,x,t,t,p,x],#23
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#24
                 [x,x,x,t,x,x,t,x,x,t,x,x,x,x,x,x,x,x,t,x,x,t,x,x,t,x,x,x],#25
                 [x,t,t,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,x,x,t,t,t,t,t,t,x],#26
                 [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,t,x,x,x,x,x,x,x,x,x,x,t,x],#27
-                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,p,x,x,x,x,x,x,x,x,x,x,t,x],#28
+                [x,t,x,x,x,x,x,x,x,x,x,x,t,x,x,m,x,x,x,x,x,x,x,x,x,x,t,x],#28
                 [x,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,t,x],#39
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]#30
         #width of matrix is 28
@@ -102,130 +103,113 @@ class Game:
         pelletColor = (222, 161, 133)
         square =25
         print(len(tiles))
-        ghosts = ghost.Ghost_manager(self.screen)
+        ghosts = ghost.Ghost_manager(self.screen, self.settings)
         index = 1
-        list_of_nodes = []
         
-
-        # for i in range(0, len(tiles) ):
-        #     for j in range(len(tiles[0])):
-        #         if tiles[i][j] == 0:
-        #             list_of_nodes.append(Node(row = j , col = i , contains = tiles[i][j]))
-                  
-        #         elif tiles[i][j] ==1: # Draw Tic-Tak
-        #             pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//4.5)
-        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
-               
-        #         elif tiles[i][j] == 2: # Special Tic-Tak PELLETE COLOR
-        #             pg.draw.circle(self.screen, pelletColor,(j * square + square//.375, i * square + square//1), square//2.5)
-        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
-                    
-        #             tiles[i][j] =5
-        #             pg.time.wait(100)  
-        #             pg.display.update()
-
-        #         elif tiles[i][j] ==5: #special tick tak black color
-        #             pg.draw.circle(self.screen, BLACK,(j * square + square//.375, i * square + square//1), square//2.5)    
-        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))       
-                    
-        #             tiles[i][j] =2
-        #             pg.time.wait(100)       
-        #             pg.display.update() 
-
-        #         elif tiles[i][j] ==6:
-        #             ghosts.set_coordinate(j * square + square//.44, i * square + square//2, index)
-        #             list_of_nodes.append(Node(row = j , col = i, contains = tiles[i][j]))
-        #             index +=1
-
-
+        g_score = {}
+        f_score ={}
         adjacency_list = {}
-        offset = 0
-        current_row = 0
-        current_pos = 0
-        print(adjacency_list)
-        t = 1 #dot
-        x =0    #wall
-        p = 2   #powerup
-        i =3    #emptyspace
-        w= 4 # door
-        g = 6 #ghost
-        p =7 # pacman
-        ghost_color_code =1
-        for row in tiles:
-            for index in row:
-                if index  != (x and w) and current_pos < 28: #if space is a dot 
-                    
-                    print("found a space for index " + str(offset))
-                    if index ==1: # Draw Tic-Tak
-                        pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//4.5)
-                    
-                    if index == 2: # Special Tic-Tak PELLETE COLOR
-                        pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)
-                    
-                    if index ==5: #special tick tak black color
-                        pg.draw.circle(self.screen, BLACK,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)    
-                    
-                    if index ==6:  
-                        ghosts.set_coordinate(current_pos * square + square//.44, current_row * square + square//2, ghost_color_code)
-                        ghost_color_code+=1
-                                                            
-                    if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos+1]) #saves the coordinate of the eligible space
-                    
-                    if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos-1])
-
-                    if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
-                    
-                    if (current_row-1 >= 0) and (tiles[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])
-                    current_pos +=1
-                    offset+=1
-                    
-                elif index == x and current_pos < 28:
-                    print("found wall")
-                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
-                    current_pos +=1
-                    offset+=1
-                    
-                elif index == w and current_pos < 28: 
-                    print("found door")
-                    adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
-
-                    if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
-                    
-                    if (current_row-1 >= 0) and (tiles[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
-                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])                
-                        current_pos +=1
-                        offset+=1
-                
-
-            current_pos =0
-            current_row +=1    
-            # offset+=27                
-
-
-
-        
-
-                # elif tiles[i][j] == 6: #White Special Tic-Tak
-                #     pg.draw.circle(screen, pelletColor,(j * square + square//2, i * square + square//2), square//2)
-            pg.display.update()
-
-        
-
 
         while True:
+          
+            offset = 0
+            current_row = 0
+            current_pos = 0
+            
+            priority_queue = []
+
+
+            
+            
+          
+            t = 1 #dot
+            x =0    #wall
+            p = 2   #powerup
+            i =3    #emptyspace
+            w= 4 # door
+            g = 6 #ghost
+            p =7 # pacman
+            ghost_color_code =1            
             self.check_events() #checks what keys have been pressed
             ghosts.update()
+            #TODO: A* find the Heuristic cost and declare it either here or inside the for-loop below (i dont know where yet)
+            for row in tiles:
+                for index in row:
+                    if index  != (x and w) and current_pos < 28: #if space is a dot 
+                        
+                        print("found a space for index " + str(offset))
+                        if index ==1: # Draw Tic-Tak
+                            pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//4.5)
+                        
+                        elif index == 2: # Special Tic-Tak PELLETE COLOR
+                            pg.draw.circle(self.screen, pelletColor,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)
+                        
+                        elif index ==5: #special tick tak black color
+                            pg.draw.circle(self.screen, BLACK,(current_pos * square + square//.375, current_row * square + square//1), square//2.5)    
+                        
+                        elif index ==6:  
+                            ghosts.set_coordinate(current_pos * square + square//.44, current_row * square + square//2, ghost_color_code)
+                            ghost_color_code+=1
+                        elif index == 7:
+                            print("found Pacman")
+                            
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float(0))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                               
+                            
+                                                                       
+                        if (current_pos + 1 < 28) and (current_pos + 1  != (x and w)):  #check if space to the right is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos+1])#save coordinate of eligible space
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                            
+                        
+                        if (current_pos - 1 >=0) and (current_pos - 1  != (x and w)):  #check if space to the left is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([current_row, current_pos-1])
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
 
-            #self.character.update()
-            #self.ghosts.update()
-            #TODO uncomment when classes are implemented
+                        if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos] != (x and w)): #check if above below is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                        
+                        if (current_row-1 >= 0) and (tiles[current_row-1][current_pos] != (x and w)): #check if space above is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                        current_pos +=1
+                        offset+=1
+                        
+                    elif index == x and current_pos < 28:
+                        print("found wall")
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
+                        g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                        current_pos +=1
+                        offset+=1
+                        
+                    elif index == w and current_pos < 28: 
+                        print("found door")
+                        adjacency_list.setdefault(str([current_row, current_pos]),[]).append( [None, None])
+                        g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+
+                        if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos ] != x and w): #check if space below is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row+1,current_pos)])
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
+                        
+                        if (current_row-1 >= 0) and (tiles[current_row-1][current_pos ] != x and w): #check if space above is a moveable space
+                            adjacency_list.setdefault(str([current_row, current_pos]),[]).append([(current_row-1, current_pos)])     
+                            g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))   #TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end        
+                            current_pos +=1
+                            offset+=1
+                    
+
+                current_pos =0
+                current_row +=1    
+                pg.display.update
+                #self.character.update()
+                #self.ghosts.update()
+                #TODO uncomment when classes are implemented
+            print(adjacency_list)
+            #TODO: implement GHOST AI MOVE HERE 
             
             pg.display.flip() # draws everything to the screen
+
 
     def check_events(self):
         for event in pg.event.get(): # standart check to see what has been pressed

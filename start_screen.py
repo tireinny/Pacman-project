@@ -24,7 +24,8 @@ class Start_screen:
         self.blink_ghost_names =0
         self.smaller_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 30)
         self.small_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 50) #for play and highscore button
-
+        self.game = game
+        self.settings = self.game.settings
         self.screen_width = 800
         self.screen_height =1000
         self.backgroundColor = (0, 0, 0) #Black
@@ -85,7 +86,7 @@ class Start_screen:
 
         self.screen.fill(self.backgroundColor)
 
-        ghosts = Ghost_manager(self.screen)#create ghhost object to create other ghosts
+        ghosts = Ghost_manager(self.screen, self.settings)#create ghhost object to create other ghosts
         list_of_ghost =[ghosts.red_ghost, ghosts.pink_ghost, ghosts.blue_ghost, ghosts.yellow_ghost]#store ghosts in a list to print 
         
         self.screen.blit(self.start_text, [(self.screen_width - self.start_text.get_width())/2, 0])

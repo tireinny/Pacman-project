@@ -20,12 +20,15 @@ class Settings():
         self.node_points = 10 
         self.cherry = 100
         self.strawberry = 200
-        self.fruits = random.randint(self.screen_width, self.screen_height)           # spawn random locations
-        
-    def initialize_speed_settings(self):
+        self.fruits = random.randint(self.screen_width, self.screen_height)       # spawn random locations
         self.ghosts_speed = 1
         self.pacman_speed_factor = 1
         self.portal_speed_factor = 1
+        
+    # def initialize_speed_settings(self):
+    #     self.ghosts_speed = 1
+    #     self.pacman_speed_factor = 1
+    #     self.portal_speed_factor = 1
 
     def increase_speed(self):
         scale = self.speedup_scale
