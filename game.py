@@ -206,7 +206,7 @@ class Game:
                 #self.ghosts.update()
                 #TODO uncomment when classes are implemented
             print(adjacency_list)
-            #TODO: implement GHOST AI MOVE HERE 
+            #TODO: A* implement GHOST AI MOVE HERE 
             
             pg.display.flip() # draws everything to the screen
 
