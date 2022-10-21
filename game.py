@@ -106,8 +106,8 @@ class Game:
         ghosts = ghost.Ghost_manager(self.screen, self.settings)
         index = 1
         
-        g_score = {}
-        f_score ={}
+        g_score = {} #TODO: A*
+        f_score ={} #TODO: A*
         adjacency_list = {}
 
         while True:
@@ -116,7 +116,7 @@ class Game:
             current_row = 0
             current_pos = 0
             
-            priority_queue = []
+            priority_queue = []  #TODO: A*
 
 
             
