@@ -123,6 +123,7 @@ class GhostSprite( pygame.sprite.Sprite ):
             self.direction = 'E'
             self.rect.x = 0
             
+        
         # Whichever direction we're moving in, go forward
         if ( self.direction == 'N' ):
             self.rect.y -= GRID_SIZE
