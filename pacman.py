@@ -21,7 +21,7 @@ class Pacman(Sprite.Sprite):
 
     def center_pac(self):
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.bottom = self.y
         return Vector(self.rect.left, self.rect.top)
 
     def draw(self):
@@ -29,8 +29,15 @@ class Pacman(Sprite.Sprite):
 
     def update(self):
         self.posn += self.vel
-        #self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
+        self.posn, self.rect = self.clamp(self.posn, self.rect)
         self.draw()
 
     def die(self):
         pass
+
+    def clamp(self, posn, rect):
+        left, top = posn.x, posn.y
+        width, height = rect.width, rect.height
+        left = max(0, min(left,800 - width))
+        top = max(0, min(top, 1000 - height))
+        return Vector(x=left, y=top), pg.Rect(left, top, width, height)
