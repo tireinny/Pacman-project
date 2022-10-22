@@ -1,26 +1,36 @@
 import pygame as pg
 import pygame.sprite as Sprite
 
+from vector import Vector
 
-class Pacman(Sprite):
+
+class Pacman(Sprite.Sprite):
     def __init__(self, game, screen, row, col):
-        super.__init__()
+        #super.__init__()
         self.screen = screen
+        self.screen_rect = screen.get_rect()
         self.game = game
-        self.row = row
-        self.col = col
+        self.y = row
+        self.x = col
+
+        self.image = pg.image.load("images/sprites/pacman/pacman_left2.png")
         self.rect = self.image.get_rect()
+        self.posn = self.center_pac()
+
+        self.vel = Vector()
 
     def center_pac(self):
         self.rect.centerx = self.screen_rect.centerx
-
+        self.rect.bottom = self.screen_rect.bottom
+        return Vector(self.rect.left, self.rect.top)
 
     def draw(self):
-        pass
+        self.screen.blit(self.image, self.rect)
 
     def update(self):
+        self.posn += self.vel
+        #self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
+        self.draw()
+
+    def die(self):
         pass
-
-
-
-

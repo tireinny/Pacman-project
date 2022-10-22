@@ -1,10 +1,11 @@
 import pygame as pg
 import character
 import ghost
+from pacman import Pacman
 from scoreboard import Scoreboard
 import spriteSheets
 from node import Node
-
+import sys
 
 from vector import Vector
 import copy
@@ -35,14 +36,16 @@ class Game:
         self.screen.fill((0,0,0))
         start_coordinate_x = 10 
         start_coordinate_y = 10
+
+        self.pacman = Pacman(game=self, screen=self.screen, row=400, col=400)
         
-        t = 1 #dot
-        x =0    #wall
-        p = 2   #powerup
-        i =3    #emptyspace
-        w= 4 # door
-        g = 6 #ghost
-        m =7 # pacman
+        t = 1 # dot
+        x = 0 # wall
+        p = 2 # powerup
+        i = 3 # emptyspace
+        w = 4 # door
+        g = 6 # ghost
+        m = 7 # pacman
         self.game_board =[
             
                 [x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x],#0
@@ -98,7 +101,6 @@ class Game:
         self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
         pg.display.update()
 
-
         tiles = copy.deepcopy(self.game_board)
         pelletColor = (222, 161, 133)
         square =25
@@ -122,16 +124,17 @@ class Game:
             
             
           
-            t = 1 #dot
-            x =0    #wall
+            t = 1   #dot
+            x = 0   #wall
             p = 2   #powerup
-            i =3    #emptyspace
-            w= 4 # door
-            g = 6 #ghost
-            p =7 # pacman
+            i = 3   #emptyspace
+            w = 4   # door
+            g = 6   #ghost
+            p = 7   # pacman
             ghost_color_code =1            
             self.check_events() #checks what keys have been pressed
             ghosts.update()
+            self.pacman.update()
             #TODO: A* find the Heuristic cost and declare it either here or inside the for-loop below (i dont know where yet)
             for row in tiles:
                 for index in row:
@@ -205,7 +208,7 @@ class Game:
                 #self.character.update()
                 #self.ghosts.update()
                 #TODO uncomment when classes are implemented
-            print(adjacency_list)
+            #print(adjacency_list)
             #TODO: A* implement GHOST AI MOVE HERE 
             
             pg.display.flip() # draws everything to the screen
@@ -215,14 +218,18 @@ class Game:
         for event in pg.event.get(): # standart check to see what has been pressed
             if event.type == pg.QUIT: 
                 pg.quit()
-                system.exit()
+                #system.exit()
+                sys.exit()
             elif event.type == pg.KEYDOWN:
                 self.check_keydown_events(event)
 
     def check_keydown_events(self, event):
         key = event.key
 
-        if key in self.movement.keys(): print(f'Game has received {self.movement[key]} button')
+        if key in self.movement.keys(): 
+            print(f'Game has received {self.movement[key]} button')
+            self.pacman.vel += 1 * self.movement[key]
+
         # Right now only prints out what key has been pressed but should be modified once
         # we have pacman actually moving around
         
