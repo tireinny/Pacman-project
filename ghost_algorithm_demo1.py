@@ -209,8 +209,6 @@ class Ghost:
         if self.col < 0:
             self.col = len(gameBoard[0]) - 0.5
 
-
-
     def setAttacked(self, isAttacked):
         self.attacked = isAttacked
 
