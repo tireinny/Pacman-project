@@ -118,6 +118,7 @@ class Game:
         runs = True
         pacman_position = (28,15)
         dict_of_ghost_coord = {}
+        temp_ghost_coordinate = {}        
         while True:
 
             offset = 0
@@ -139,8 +140,7 @@ class Game:
             self.screen.fill((0, 0, 0))
             self.screen.blit(self.background_img, ((
                 (self.screen_width - self.background_img.get_width())/2), 10))
-            ghosts.update()
-            self.pacman.update()
+
                      # a_star(tiles, (15, 12))
 
             for row in tiles:
@@ -167,7 +167,8 @@ class Game:
 
                         elif index == 6:
                             dict_of_ghost_coord[ghost_color_code] = ((current_row, current_pos))
-                            
+                            temp_ghost_coordinate[ghost_color_code] = ((current_row, current_pos))
+                            ghosts.set_coordinate(current_row* square + square //.44, current_pos * square + square//2, ghost_color_code)
                             # print(dict_of_ghost_coord)
                             # print(dict_of_ghost_coord.get(1))
                             # TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
@@ -281,10 +282,30 @@ class Game:
                 
                 # self.check_events()
             n = 1
+
             for coord in dict_of_ghost_coord.values():
+
+                
+                # temp_ghost_coordinate[ghost_color_code] = ((current_row, current_pos))
                 path = a_star(adjacency_list,(coord[0], coord[1]), pacman_position)
+                print((path.get(coord)[0]* square + square //.44, path.get(coord)[1] * square + square//2))
+                print(path.get(coord)[0])
+                print(temp_ghost_coordinate[n][0])
+                print(temp_ghost_coordinate[n][1])
+                if temp_ghost_coordinate[n][0] > path.get(coord)[0]:#used for changing the facing direction of the ghost 
+                    ghosts.set_direction(1,n) #set direction to down
+                elif temp_ghost_coordinate[n][0] < path.get(coord)[0]:
+                    ghost.set_direction(3, n) #set direction to up
+                
+                if temp_ghost_coordinate[n][1] > path.get(coord)[1]:
+                    ghosts.set_direction(2,n)
+                elif temp_ghost_coordinate[n][1] < path.get(coord)[1]:
+                    ghosts.set_direction(4,n)
+                    
                 ghosts.set_coordinate(path.get(coord)[0]* square + square //.44, path.get(coord)[1] * square + square//2, n)
                 
+            ghosts.update()
+            self.pacman.update()
                 
             # runs = False
                 #self.character.update()

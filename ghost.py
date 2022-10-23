@@ -22,23 +22,31 @@ class Ghost_manager:
     def set_coordinate(self, row, col, color):
 
         if color == 1:    
-            self.red_ghost.row = row
-            self.red_ghost.col = col
+            self.red_ghost.y = row
+            self.red_ghost.x = col
 
         if color == 2:
-            self.blue_ghost.row = row
-            self.blue_ghost.col = col 
+            self.blue_ghost.y = row
+            self.blue_ghost.x = col 
         
         if color == 3: 
-            self.pink_ghost.row = row
-            self.pink_ghost.col = col
+            self.pink_ghost.y= row
+            self.pink_ghost.x = col
         
         if color == 4: 
-            self.yellow_ghost.row = row
-            self.yellow_ghost.col = col
+            self.yellow_ghost.y= row
+            self.yellow_ghost.x = col
         
-    
-    
+    def set_direction(self, dir, ghost_code):
+        #1-red 2-blue, 3-pink 4-pink
+        if ghost_code ==1:
+            self.red_ghost.direction = dir
+        if ghost_code ==2:
+            self.blue_ghost.direction = dir
+        if ghost_code ==3:
+            self.pink_ghost.direction = dir
+        if ghost_code ==4:
+            self.yellow_ghost.direction =dir 
     def update(self):
         
         # self.red_ghost.move()
@@ -86,11 +94,23 @@ class Ghost(pg.sprite.Sprite): #for creating all the ghosts
 
     def update(self):
         # self.current_sprite += 1
-        self.x += (self.settings.ghosts_speed * self.direction)
-        self.rect.x = self.x
-        
-        self.y += (self.settings.ghosts_speed * self.direction)
-        self.rect.y = self.y
+        if self.direction == 4:
+            self.x += (self.settings.ghosts_speed)
+            self.rect.x = self.x
+            self.rect.y = self.y
+        elif self.direction ==2:
+            self.x -= (self.settings.ghosts_speed)
+            self.rect.x = self.x
+            self.rect.y = self.y
+        elif self.direction == 1:
+            self.y -= (self.settings.ghosts_speed )
+            self.rect.y = self.y
+            self.rect.x = self.x
+        elif self.direction == 3:
+            self.y += (self.settings.ghosts_speed )
+            self.rect.y = self.y
+            self.rect.x = self.x
+            
         
         # if self.current_sprite >= len(self.sprites):
         #     self.current_sprite =0

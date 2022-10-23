@@ -115,14 +115,29 @@ class Start_screen:
                         self.blink_ghost_names = 1
                         break
                 for g in range(2):
+                    self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+                    self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
+                    
                     if g == 0:
                         
                         n.draw(pos_x = list_of_posX[pos_indexX], pos_y= list_of_posY[pos_indexY])
-                        n.update()
+                        # n.update()
+                        
+                        for event in pg.event.get():
+                            self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+                            self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
                             
+                            if event.type == pg.QUIT:
+                                pg.quit()
+                                sys.exit()
+                         
                         pg.display.update()
+                    self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+                    self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
                      
                     pg.time.wait(700) #timer for duration between each blink
+                    self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
+                    self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
                     
                     text = self.smaller_font.render(names_of_ghosts[txt_cnt],True, list_of_colors[color_index]) #changes text and color based on the ghost
                     color_index +=1
@@ -135,6 +150,11 @@ class Start_screen:
                     if pos_indexX > 1: pos_indexX=0 #reset pos x after the nickname is shown
                     if pos_indexY > 7: pos_indexY =0#reset pos y after the nickname is shown
                     txt_cnt +=1
+                    for event in pg.event.get():
+                        if event.type == pg.QUIT:
+                            pg.quit()
+                            sys.exit()
+                    pg.display.update()  
             self.create_button("PLAY", (self.screen_width -self.play_text.get_width())/2, self.screen_height-200, 200, 60, LIGHTERGRAY, BLACK, 1)
             self.create_button("HighScores", (self.screen_width -self.highscore_text.get_width())/2, self.screen_height-100, 510, 60, LIGHTERGRAY, BLACK, 2)
                           
