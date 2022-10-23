@@ -107,7 +107,7 @@ class Game:
         tiles = copy.deepcopy(self.game_board)
         pelletColor = (222, 161, 133)
         square = 25
-        print(len(tiles))
+        # print(len(tiles))
         ghosts = ghost.Ghost_manager(self.screen, self.settings)
         index = 1
 
@@ -118,7 +118,8 @@ class Game:
         p_col = 15
 
         runs = True
-
+        pacman_position = (28,15)
+        dict_of_ghost_coord = {}
         while True:
 
             offset = 0
@@ -146,7 +147,7 @@ class Game:
 
             for row in tiles:
                 # adjacency_list[(current_row, current_pos)] = {}
-                print(adjacency_list)
+                # print(adjacency_list)
                 for index in row:
                     if index != x and index!=w and current_pos < 28:  # if space is a dot
 
@@ -167,15 +168,18 @@ class Game:
                             
 
                         elif index == 6:
-                            ghosts.set_coordinate(
-                                current_pos * square + square//.44, current_row * square + square//2, ghost_color_code)
+                            dict_of_ghost_coord[ghost_color_code] = ((current_row, current_pos))
+                            
+                            # print(dict_of_ghost_coord)
+                            # print(dict_of_ghost_coord.get(1))
                             # TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
                             
 
                             ghost_color_code += 1
                             h_score = abs(current_row-p_row) + \
                                 abs(current_pos-p_col)
-                        elif index == 7:pass
+                        elif index == 7:
+                            pacman_position = (current_row, current_pos)
                             
                             #print("found Pacman")
                         
@@ -206,7 +210,7 @@ class Game:
 
                         # check if above below is a moveable space
                         if (current_row+1 < len(tiles)) and (tiles[current_row+1][current_pos] != 4 and (tiles[current_row+1][current_pos]) != 0):
-                            print(tiles[12][12])
+                            # print(tiles[12][12])
                             adjacency_list.setdefault((current_row, current_pos), {})['S'] =1    
                                 #{'S': 1})  # save coordinate of eligible space
                             #g_score.setdefault(str([current_row, current_pos]), []).append(float('inf'))#TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
@@ -278,14 +282,19 @@ class Game:
                 # print(adjacency_list)
                 
                 # self.check_events()
-            a_star(adjacency_list,(11, 12), (28,15))
+            n = 1
+            for coord in dict_of_ghost_coord.values():
+                path = a_star(adjacency_list,(coord[0], coord[1]), pacman_position)
+                ghosts.set_coordinate(path.get(coord)[0]* square + square //.44, path.get(coord)[1] * square + square//2, n)
+                
+                
             # runs = False
                 #self.character.update()
                 #self.ghosts.update()
                
                 #TODO uncomment when classes are implemented
             #TODO: A* implement GHOST AI MOVE HERE
-            print(adjacency_list)
+            # print(adjacency_list)
             pg.display.flip()  # draws everything to the screen
 
     def check_events(self):
@@ -344,7 +353,7 @@ def a_star(grid, ghost_pos, pacman_pos):
         if current_cell == pacman_pos:
             break
         for d in 'ESNW': #means east south north west 
-            print(grid[current_cell][d])
+            # print(grid[current_cell][d])
             if grid[current_cell][d] == True:
                 if d == 'E':
                     child_cell = (current_cell[0], current_cell[1]+1)
@@ -366,11 +375,15 @@ def a_star(grid, ghost_pos, pacman_pos):
                     f_score[child_cell] = temp_f_score
                     open.put((temp_f_score, heuristics(child_cell, pacman_pos), child_cell))
                     path[child_cell] = current_cell
+                    
     forward_path ={}
-    cell =(1,1)
-    while(cell!= start):
+    cell =(pacman_pos)
+    while cell!= start:
         forward_path[path[cell]] = cell
         cell = path[cell]
+    
+    
+    # print(forward_path)
     return forward_path
 
 
