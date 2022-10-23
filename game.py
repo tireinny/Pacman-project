@@ -12,7 +12,7 @@ from vector import Vector
 import copy
 from start_screen import BLACK, Start_screen
 from settings import Settings
-
+from audio import Audio
 
 from os import system
 
@@ -28,8 +28,7 @@ class Game:
         pg.init()  # intialize and set screen size
         self.screen_width = 800
         self.screen_height = 1000
-        self.screen = pg.display.set_mode(
-            (self.screen_width, self.screen_height))
+        self.screen = pg.display.set_mode((self.screen_width, self.screen_height))
         self.settings = Settings()
         # this block of code may need to be removed if pg is intialized elsewhere
         self.settings = Settings()
@@ -89,7 +88,7 @@ class Game:
 
         # print(adjacency_list)
 
-        #self.sound = Sound()
+        self.sound = Audio()
         #TODO enter a background song to play
 
         #self.character = Character()
