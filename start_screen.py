@@ -91,7 +91,7 @@ class Start_screen:
         
         self.screen.blit(self.start_text, [(self.screen_width - self.start_text.get_width())/2, 0])
 
-        names_of_ghosts = '-SHADOW\n "BLINKY"\n -SPEEDY\n "PINKY"\n -BASHFUL \n"INKYl"\n -POKEY \n"CLYDE"'.splitlines()
+        names_of_ghosts = '--SHADOW\n "BLINKY"\n -SPEEDY\n "PINKY"\n -BASHFUL \n"INKY"\n -POKEY \n"CLYDE"'.splitlines()
         txt_cnt = 0 #used for seuquentially blinking the names of the ghost on the screen
                     #every increment is a name 
     

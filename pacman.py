@@ -1,23 +1,43 @@
 import pygame as pg
+import pygame.sprite as Sprite
 from character import Character
 from vector import Vector
 import timer
 
+from vector import Vector
 
-class Pacman(Character):
-    def __init__(self):
-        super.__init__()
+
+class Pacman(Sprite.Sprite):
+    def __init__(self, game, screen, row, col):
+        #super.__init__()
+        self.screen = screen
+        self.screen_rect = screen.get_rect()
+        self.game = game
+        self.y = row
+        self.x = col
+
+        self.image = pg.image.load("images/sprites/pacman/pacman_left2.png")
+        self.rect = self.image.get_rect()
+        self.posn = self.center_pac()
+
+        self.vel = Vector()
 
     def center_pac(self):
         self.rect.centerx = self.screen_rect.centerx
-        self.rect.bottom = self.screen_rect.bottom
+        self.rect.bottom = self.y
         return Vector(self.rect.left, self.rect.top)
 
-    def fire_portal():
-        pass
-
-    def reset(self):
-        pass
+    def draw(self):
+        self.screen.blit(self.image, self.rect)
 
     def update(self):
+        self.posn += self.vel
+        self.posn, self.rect = self.clamp(self.posn, self.rect)
+        self.draw()
+
+    def die(self):
         pass
+
+
+
+
