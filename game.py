@@ -89,10 +89,13 @@ class Game:
 
         self.intro_msc = 'sounds/game_start.wav'
         self.victory = 'sounds/extend.wav'
-        self.munch, self.bckgrnd_msc, self.death, = 0, 1, 2
-        sounds = [{self.munch: 'sounds/munch_1.wav', 
+        #self.munch, self.bckgrnd_msc, self.death, = 0, 1, 2
+        '''sounds = [{self.munch: 'sounds/munch_1.wav', 
                     self.bckgrnd_msc: 'sounds/siren_1.wav',
-                    self.death:'sounds/death_1.wav'}]
+                    self.death:'sounds/death_1.wav'}]'''
+        self.munch, self.death, = 0, 1
+        sounds = [{self.munch: 'sounds/munch_1.wav', 
+        self.death:'sounds/death_1.wav'}]
         self.audio = Audio(sounds=sounds, playing=True)
         #TODO enter a background song to play
 
@@ -103,8 +106,8 @@ class Game:
         #TODO create ghost class and create it
 
     def play(self):
-        #self.sound.play()
-        #TODO uncomment when sound has been made
+        pg.mixer.music.load(self.intro_msc)
+        pg.mixer.music.play(1, 0.0)
         #self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
         pg.display.update()
 
