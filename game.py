@@ -12,7 +12,6 @@ import copy
 from start_screen import BLACK, Start_screen
 from settings import Settings
 from audio import Audio
-import time
 
 from os import system
 
@@ -88,10 +87,13 @@ class Game:
 
         self.intro_msc = 'sounds/game_start.wav'
         self.victory = 'sounds/extend.wav'
-        self.munch, self.bckgrnd_msc, self.death, = 0, 1, 2
-        sounds = [{self.munch: 'sounds/munch_1.wav', 
+        #self.munch, self.bckgrnd_msc, self.death, = 0, 1, 2
+        '''sounds = [{self.munch: 'sounds/munch_1.wav', 
                     self.bckgrnd_msc: 'sounds/siren_1.wav',
-                    self.death:'sounds/death_1.wav'}]
+                    self.death:'sounds/death_1.wav'}]'''
+        self.munch, self.death, = 0, 1
+        sounds = [{self.munch: 'sounds/munch_1.wav', 
+        self.death:'sounds/death_1.wav'}]
         self.audio = Audio(sounds=sounds, playing=True)
         #TODO enter a background song to play
 
@@ -102,8 +104,8 @@ class Game:
         #TODO create ghost class and create it
 
     def play(self):
-        #self.sound.play()
-        #TODO uncomment when sound has been made
+        pg.mixer.music.load(self.intro_msc)
+        pg.mixer.music.play(1, 0.0)
         #self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
         pg.display.update()
 
@@ -140,9 +142,6 @@ class Game:
             # power pellet
             g = 6   # ghost
             p = 7   # pacman
-            tg = 8 #dot and ghost 
-            pg =9 #powerup and ghost
-            
             ghost_color_code = 1
             self.check_events()  # checks what keys have been pressed
             self.screen.fill((0, 0, 0))
@@ -176,7 +175,7 @@ class Game:
                         elif index == 6:
                             dict_of_ghost_coord[ghost_color_code] = ((current_row, current_pos))
                             temp_ghost_coordinate[ghost_color_code] = ((current_row, current_pos))
-                            ghosts.set_coordinate(current_row* square + square //1.8, current_pos * square + square//2.5, ghost_color_code)
+                            ghosts.set_coordinate(current_row* square + square //.44, current_pos * square + square//2, ghost_color_code)
                             # print(dict_of_ghost_coord)
                             # print(dict_of_ghost_coord.get(1))
                             # TODO: A* these are used in A* algorithm refer to the youtube video in resource "A-Star A* Search in Python [Python Maze World- pyamaze]" Iam at 9:52 min into the video, watch from begining and follow to the end
@@ -296,19 +295,12 @@ class Game:
                 
                 # temp_ghost_coordinate[ghost_color_code] = ((current_row, current_pos))
                 path = a_star(adjacency_list,(coord[0], coord[1]), pacman_position)
-                print((path.get(coord)[0]* square + square //1.8, path.get(coord)[1] * square + square//2.5))
+                print((path.get(coord)[0]* square + square //.44, path.get(coord)[1] * square + square//2))
                 print(path.get(coord)[0])
                 print(temp_ghost_coordinate[n][0])
                 print(temp_ghost_coordinate[n][1])
-                
                 if temp_ghost_coordinate[n][0] > path.get(coord)[0]:#used for changing the facing direction of the ghost 
                     ghosts.set_direction(1,n) #set direction to down
-                    if tiles[coord[0]-1] == t:
-                        tiles[coord[0]-1] = tg #set tile above equal dot and ghost
-                        
-                    elif tiles[coord[0]-1] == p:
-                        tiles[coord[0]-1] == pg
-                  
                 elif temp_ghost_coordinate[n][0] < path.get(coord)[0]:
                     ghost.set_direction(3, n) #set direction to up
                 
@@ -317,12 +309,8 @@ class Game:
                 elif temp_ghost_coordinate[n][1] < path.get(coord)[1]:
                     ghosts.set_direction(4,n)
                     
-                if tiles[coord] == pg:
-                    
-                    
-                ghosts.set_coordinate(path.get(coord)[0]* square + square //1.8, path.get(coord)[1] * square + square//2.5, n)
-                n+=1
-            time.sleep(.01)
+                ghosts.set_coordinate(path.get(coord)[0]* square + square //.44, path.get(coord)[1] * square + square//2, n)
+                
             ghosts.update()
             self.pacman.update()
                 
