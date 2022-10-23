@@ -217,7 +217,7 @@ while running:
     window.blit( background, ( 0, 0 ) )
     ghosts.draw( window )
     pygame.display.flip()
-
+        
     # Clamp FPS
     clock.tick(30)
 
