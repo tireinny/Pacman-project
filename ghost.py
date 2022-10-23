@@ -90,7 +90,7 @@ class Ghost(pg.sprite.Sprite): #for creating all the ghosts
         
 
         self.rect.topleft = [pos_x, pos_y]
-        self.screen.blit(self.sprites[self.current_sprite], (pos_x, pos_y))
+        self.screen.blit(self.sprites[self.current_sprite], self.rect)
 
     def update(self):
         # self.current_sprite += 1
