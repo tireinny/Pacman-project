@@ -1,6 +1,8 @@
+import pygame as pg
+
 class Audio:
     def __init__(self, sounds, playing):
-        self sounds = {}
+        self.sounds = {}
         
         for sound in sounds: 
             for k, v in sound.item():
@@ -11,7 +13,7 @@ class Audio:
         
     def play_sound(self, sound):                                                           #<--------- Check before testing
         if self.playing and sound in self.sounds.keys():                                    #-Khoi
-            self.sounds[sounds].play()
+            self.sounds[sound].play()
             
     def toggle(self):
         self.playing = not self.playing
