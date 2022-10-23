@@ -5,8 +5,8 @@ class Audio:
         self.sounds = {}
         
         for sound in sounds: 
-            for k, v in sound.item():
-                self.sounds[k] = pg.mixer.Sounds(v)
+            for k, v in sound.items():
+                self.sounds[k] = pg.mixer.Sound(v)
                 
         self.playing = playing 
         

@@ -1,5 +1,8 @@
 import pygame as pg
 import pygame.sprite as Sprite
+from character import Character
+from vector import Vector
+import timer
 
 from vector import Vector
 
@@ -35,9 +38,6 @@ class Pacman(Sprite.Sprite):
     def die(self):
         pass
 
-    def clamp(self, posn, rect):
-        left, top = posn.x, posn.y
-        width, height = rect.width, rect.height
-        left = max(0, min(left,800 - width))
-        top = max(0, min(top, 1000 - height))
-        return Vector(x=left, y=top), pg.Rect(left, top, width, height)
+
+
+
