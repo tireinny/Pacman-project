@@ -21,7 +21,7 @@ class Settings():
         self.cherry = 100
         self.strawberry = 200
         self.fruits = random.randint(self.screen_width, self.screen_height)       # spawn random locations
-        self.ghosts_speed = 1
+        self.ghosts_speed = 20
         self.pacman_speed_factor = 1
         self.portal_speed_factor = 1
         
