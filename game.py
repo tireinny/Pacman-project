@@ -88,7 +88,13 @@ class Game:
 
         # print(adjacency_list)
 
-        #self.sound = Audio()
+        self.intro_msc = 'sounds/game_start.wav'
+        self.victory = 'sounds/extend.wav'
+        self.munch, self.bckgrnd_msc, self.death, = 0, 1, 2
+        sounds = [{self.munch: 'sounds/munch_1.wav', 
+                    self.bckgrnd_msc: 'sounds/siren_1.wav',
+                    self.death:'sounds/death_1.wav'}]
+        self.audio = Audio(sounds=sounds, playing=True)
         #TODO enter a background song to play
 
         #self.character = Character()
