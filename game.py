@@ -1,6 +1,5 @@
 import math
 import pygame as pg
-import character
 import ghost
 from pacman import Pacman
 from scoreboard import Scoreboard
@@ -88,7 +87,7 @@ class Game:
 
         # print(adjacency_list)
 
-        self.sound = Audio()
+        #self.sound = Audio()
         #TODO enter a background song to play
 
         #self.character = Character()

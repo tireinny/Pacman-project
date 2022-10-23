@@ -1,6 +1,5 @@
 import pygame as pg
 import pygame.sprite as Sprite
-from character import Character
 from vector import Vector
 import timer
 
