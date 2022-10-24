@@ -35,7 +35,7 @@ class Game:
         self.background_img = pg.image.load(f'images/game_board.png')
         self.scoreboard = Scoreboard(game=self)
         self.screen.fill((0, 0, 0))
-        self.bg_sounds =
+        self.bg_sounds = 'sounds/siren_1.wav'
         self.pacman = Pacman(game=self, screen=self.screen, row=800, col=400)
 
         t = 1  # dot
