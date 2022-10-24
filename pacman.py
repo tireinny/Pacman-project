@@ -34,6 +34,8 @@ class Pacman(Sprite.Sprite):
         self.posn, self.rect = self.clamp(self.posn, self.rect)
         self.draw()
 
+    def check_collisions(self):
+        pass
     def die(self):
         pass
 
