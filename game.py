@@ -3,6 +3,7 @@ import pygame as pg
 import ghost
 from pacman import Pacman
 from scoreboard import Scoreboard
+from sound import Sound
 import spriteSheets
 from node import Node
 import sys
@@ -35,7 +36,7 @@ class Game:
         self.background_img = pg.image.load(f'images/game_board.png')
         self.scoreboard = Scoreboard(game=self)
         self.screen.fill((0, 0, 0))
-        self.bg_sounds = 'sounds/siren_1.wav'
+        self.bg_sounds = Sound('sounds/siren_1.wav')
         self.pacman = Pacman(game=self, screen=self.screen, row=800, col=400)
 
         t = 1  # dot
@@ -104,9 +105,12 @@ class Game:
         #TODO create ghost class and create it
 
     def play(self):
-        pg.mixer.music.load(self.intro_msc)
-        pg.mixer.music.play(1, 0.0)
+        #pg.mixer.music.load(self.intro_msc)
+        #pg.mixer.music.play(1, 0.0)
         #self.screen.blit(self.background_img, (((self.screen_width - self.background_img.get_width())/2),10))
+        
+        
+
         pg.display.update()
 
         tiles = copy.deepcopy(self.game_board)
@@ -289,7 +293,7 @@ class Game:
                 
                 # self.check_events()
             n = 1
-
+            
             for coord in dict_of_ghost_coord.values():
 
                 
@@ -322,6 +326,9 @@ class Game:
             #TODO: A* implement GHOST AI MOVE HERE
             # print(adjacency_list)
             pg.display.flip()  # draws everything to the screen
+            if(runs):
+                self.bg_sounds.game_start()
+                runs = False
 
     def check_events(self):
         #print("\n\n\nCheck event entered\n\n\n")

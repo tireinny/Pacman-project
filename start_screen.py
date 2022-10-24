@@ -1,5 +1,6 @@
 import pygame as pg
 import sys
+from sound import Sound
 import spriteSheets as ss
 from ghost import Ghost_manager
 from scoreboard import Scoreboard
@@ -20,6 +21,7 @@ class Start_screen:
     def __init__(self, game):
         pg.init()
         
+        self.sound = Sound('sounds/intermission.wav')
         self.start_font = pg.font.Font(f'font/Emulogic-zrEw.ttf', 100) #import font file in folder "font for title"
         self.blink_ghost_names =0
         self.smaller_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 30)
@@ -83,7 +85,7 @@ class Start_screen:
     def play(self):
 
         
-
+        self.sound.play_bg('sounds/intermission.wav', 2)
         self.screen.fill(self.backgroundColor)
 
         ghosts = Ghost_manager(self.screen, self.settings)#create ghhost object to create other ghosts
