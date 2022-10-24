@@ -24,7 +24,7 @@ class Pacman(Sprite.Sprite):
         self.vel = Vector()
 
     def center_pac(self):
-        self.rect.centerx = self.screen_rect.centerx
+        self.rect.centerx = self.x
         self.rect.bottom = self.y
         return Vector(self.rect.left, self.rect.top)
 
@@ -47,6 +47,11 @@ class Pacman(Sprite.Sprite):
         left = max(0, min(left, 800 - width))
         top = max(0, min(top, 1000- height))
         return Vector(x=left, y=top), pg.Rect(left, top, width, height)
+
+    def set_coords(self, x, y):
+        self.x = x
+        self.y = y
+        self.posn = self.center_pac()
 
 
 

@@ -41,7 +41,7 @@ class Game:
         self.scoreboard = Scoreboard(game=self)
         self.screen.fill((0, 0, 0))
         self.bg_sounds = Sound('sounds/siren_1.wav')
-        self.pacman = Pacman(game=self, screen=self.screen, row=800, col=400)
+        self.pacman = Pacman(game=self, screen=self.screen, row=0, col=0)
 
         t = 1  # dot
         x = 0  # wall
@@ -132,6 +132,8 @@ class Game:
 
         runs = True
         pacman_position = (28,15)
+        self.pacman.set_coords(440, 730)
+        self.pacman.update()
         dict_of_ghost_coord = {}
         temp_ghost_coordinate = {}     
          
