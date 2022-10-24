@@ -17,7 +17,9 @@ class Pacman(Sprite.Sprite):
 
         self.image = pg.image.load("images/sprites/pacman/pacman_left2.png")
         self.rect = self.image.get_rect()
-        self.posn = self.center_pac()
+        self.posn = (self.center_pac())
+        print(self.posn)
+        # self.posn = ((self.y, self.x))
 
         self.vel = Vector()
 

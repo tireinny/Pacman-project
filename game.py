@@ -195,6 +195,8 @@ class Game:
                                 abs(current_pos-p_col)
                         elif index == 7:
                             pacman_position = (current_row, current_pos)
+                            self.pacman.y = current_row* square + square //.44
+                            self.pacman.x = current_pos * square + square//2
                             
                             #print("found Pacman")
                         
