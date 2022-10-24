@@ -1,5 +1,6 @@
 import math
 import pygame as pg
+from UI import UI
 import ghost
 from pacman import Pacman
 from scoreboard import Scoreboard
@@ -30,6 +31,9 @@ class Game:
         self.screen_height = 1000
         self.screen = pg.display.set_mode((self.screen_width, self.screen_height))
         self.settings = Settings()
+        # self.small_font = pg.font.Font(f"font/Emulogic-zrEw.ttf", 50)
+        # self.UI = self.small_font.render("Play Game", True, GRAY)
+        self.UI = UI(self.screen)
         # this block of code may need to be removed if pg is intialized elsewhere
         self.settings = Settings()
         pg.display.set_caption("Pacman")
@@ -129,9 +133,10 @@ class Game:
         runs = True
         pacman_position = (28,15)
         dict_of_ghost_coord = {}
-        temp_ghost_coordinate = {}        
+        temp_ghost_coordinate = {}     
+         
         while True:
-
+            
             offset = 0
             current_row = 0
             current_pos = 0
@@ -151,7 +156,7 @@ class Game:
             self.screen.fill((0, 0, 0))
             self.screen.blit(self.background_img, ((
                 (self.screen_width - self.background_img.get_width())/2), 10))
-
+            self.UI.run()  
                      # a_star(tiles, (15, 12))
 
             for row in tiles:
