@@ -1,1 +1,1 @@
-print
+pacman_position[0]*25
