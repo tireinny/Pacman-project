@@ -1,5 +1,4 @@
 import pygame as pg
-from laser import LaserType
 import time
 
 
@@ -8,22 +7,23 @@ class Sound:
         pg.mixer.init()
         pg.mixer.music.load(bg_music)
         pg.mixer.music.set_volume(0.1)
-        alienlaser_sound = pg.mixer.Sound('sounds/alienlaser.wav')
-        photontorpedo_sound = pg.mixer.Sound('sounds/photon_torpedo.wav')
-        gameover_sound = pg.mixer.Sound('sounds/gameover.wav')
-        self.sounds = {'alienlaser': alienlaser_sound, 'photontorpedo': photontorpedo_sound,
-                       'gameover': gameover_sound}
+        gameover_sound = pg.mixer.Sound('sounds/death_1.wav')
 
-    def play_bg(self):
-        pg.mixer.music.play(-1, 0.0)
+    def play_bg(self, music = 'sounds/siren_1.wav', loops = -1):
+        pg.mixer.music.load(music)
+        pg.mixer.music.play(loops, 0.0)
 
     def stop_bg(self):
         pg.mixer.music.stop()
 
-    def shoot_laser(self, type): 
-        pg.mixer.Sound.play(self.sounds['alienlaser' if type == LaserType.ALIEN else 'photontorpedo'])
     def gameover(self): 
         self.stop_bg() 
-        pg.mixer.music.load('sounds/gameover.wav')
+        pg.mixer.music.load('sounds/death_1.wav')
         self.play_bg()
         time.sleep(2.8)
+
+    def game_start(self):
+        pg.mixer.music.load('sounds/game_start.wav')
+        pg.mixer.music.play(0, 0.0)
+        time.sleep(4.5)
+        self.play_bg()
