@@ -151,6 +151,8 @@ class Game:
             # power pellet
             g = 6   # ghost
             p = 7   # pacman
+            tg = 8
+            pg = 9
             ghost_color_code = 1
             self.check_events()  # checks what keys have been pressed
             self.screen.fill((0, 0, 0))
@@ -312,6 +314,9 @@ class Game:
                 print(temp_ghost_coordinate[n][1])
                 if temp_ghost_coordinate[n][0] > path.get(coord)[0]:#used for changing the facing direction of the ghost 
                     ghosts.set_direction(1,n) #set direction to down
+                    if tiles[coord] == tg:
+                        tiles[coord]
+                        
                 elif temp_ghost_coordinate[n][0] < path.get(coord)[0]:
                     ghost.set_direction(3, n) #set direction to up
                 
